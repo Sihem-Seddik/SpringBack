@@ -4,7 +4,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import soa.entities.Categorie;
 import soa.entities.Produit;
+import soa.repository.CategorieRepository;
 import soa.repository.ProduitRepository;
 
 @RestController // pour déclarer un service web de type REST
@@ -13,7 +16,18 @@ import soa.repository.ProduitRepository;
 public class ProduitRESTController {
     @Autowired // pour l'injection de dépendances
     private ProduitRepository produitRepos;
+    private CategorieRepository categorieRepos;
 
+    @GetMapping(
+            // spécifier le path de la méthode
+            value = "/categories",
+            // spécifier le format de retour en JSON
+            produces = { MediaType.APPLICATION_JSON_VALUE }
+    )
+    public List<Categorie> getAllCategories() {
+        // Use the injected repository instance to call findAll()
+        return categorieRepos.findAll();
+    }
     //  Message d'accueil
     //  http://localhost:8080/produits/index  (GET)
     @GetMapping(value ="/index" )
@@ -28,13 +42,13 @@ public class ProduitRESTController {
             // spécifier le path de la méthode
             value= "/",
             // spécifier le format de retour en XML
-            produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }
+            produces = { MediaType.APPLICATION_JSON_VALUE }
     )
     public  List<Produit> getAllProduits() {
         return produitRepos.findAll();
 
     }
-
+   
     //  Afficher un produit en spécifiant son 'id'
     //  http://localhost:8080/produits/{id} (GET)
     @GetMapping(

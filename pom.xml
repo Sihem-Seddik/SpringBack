@@ -15,7 +15,10 @@
 	<description>Gestion de Stock</description>
 	<properties>
 		<java.version>17</java.version>
+		    <server.port>3333</server.port>
+
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
